@@ -84,7 +84,7 @@ def setup_database():
         # Seed Tickets
         print("Seeding tickets...")
         tickets_data = [
-            {"type": "EARLY_BIRD", "price": 29900, "limit": 7, "sold": 0},
+            {"type": "EARLY_BIRD", "price": 29900, "limit": 30, "sold": 0},
             {"type": "STANDARD", "price": 49900, "limit": 100, "sold": 0}
         ]
         for t in tickets_data:
