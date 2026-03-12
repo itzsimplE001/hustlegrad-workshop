@@ -1,2 +1,5 @@
 fastapi
 uvicorn
+appwrite
+python-dotenv
+razorpay
