@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Placement Code — HustleGrad</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;0,900;1,400;1,700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">Hustle<span>Grad</span></div>
+  <div class="nav-links">
+    <a href="#curriculum" class="nav-link">Curriculum</a>
+    <a href="#bonus" class="nav-link">Bonus</a>
+    <a href="#who" class="nav-link">Who It's For</a>
+    <div class="nav-sep"></div>
+    <a href="#register" class="nav-cta">Register Now ↗</a>
+  </div>
+  
+  <div class="nav-mobile-right">
+    <a href="#register" class="nav-cta-mobile">Register ↗</a>
+    <button class="nav-hamburger" onclick="toggleMobileMenu()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Mobile Menu Drawer -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#curriculum" class="mobile-link" onclick="toggleMobileMenu()">Curriculum</a>
+  <a href="#bonus"      class="mobile-link" onclick="toggleMobileMenu()">Bonus Resources</a>
+  <a href="#who"        class="mobile-link" onclick="toggleMobileMenu()">Who It's For</a>
+  <a href="#register"   class="mobile-link mobile-link-cta" onclick="toggleMobileMenu()">Register Now ↗</a>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     HERO
+════════════════════════════════════════════════════════════ -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="seat-pill">
+      <span class="seat-dot"></span>
+      <span class="seat-text">Live · 3-Day Workshop · 29–31 March · 7–9 PM</span>
+    </div>
+
+    <p class="hero-kicker">HustleGrad Presents</p>
+
+    <h1 class="hero-title serif">
+      The Placement<br><em>Code</em>
+    </h1>
+
+    <hr class="hero-rule">
+
+    <p class="hero-sub">
+      Your batchmate got the internship. You didn't. Not because they're smarter — but because they understand how hiring actually works. This workshop changes that.
+    </p>
+
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-n">3</div>
+        <div class="stat-l">Days</div>
+      </div>
+      <div class="stat">
+        <div class="stat-n">6hrs</div>
+        <div class="stat-l">Training</div>
+      </div>
+      <div class="stat">
+        <div class="stat-n">8</div>
+        <div class="stat-l">Modules</div>
+      </div>
+      <div class="stat">
+        <div class="stat-n">100</div>
+        <div class="stat-l">Seats Only</div>
+      </div>
+    </div>
+
+    <!-- Early Bird + Total Registration Counters -->
+    <div class="float-badge" id="floatBadge">
+
+      <!-- Row 1: Early Bird -->
+      <div class="fb-row">
+        <div class="fb-col-left">
+          <div class="fb-label">Early Bird Price</div>
+          <div class="fb-price" id="heroEarlyPrice">₹299</div>
+          <div class="fb-sub" id="heroEarlySub">First 30 seats only</div>
+        </div>
+        <div class="fb-divider"></div>
+        <div class="fb-bar-wrap">
+          <div class="fb-label" id="earlyBarLabel">Early Bird Seats</div>
+          <div class="fb-bar"><div class="fb-fill" id="earlyFill" style="width:0%"></div></div>
+          <div class="fb-seats">
+            <span id="earlyRemainingText">—</span>
+            <span id="earlyPctText" style="color:var(--gold-lt);font-weight:700"></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="fb-row-divider"></div>
+
+      <!-- Row 2: Total Registrations -->
+      <div class="fb-row">
+        <div class="fb-col-left">
+          <div class="fb-label">Total Registered</div>
+          <div class="fb-price fb-price-total" id="heroTotalCount">—</div>
+          <div class="fb-sub">out of 100 seats</div>
+        </div>
+        <div class="fb-divider"></div>
+        <div class="fb-bar-wrap">
+          <div class="fb-label">Overall Capacity</div>
+          <div class="fb-bar"><div class="fb-fill fb-fill-total" id="totalFill" style="width:0%"></div></div>
+          <div class="fb-seats">
+            <span id="totalRemainingText">—</span>
+            <span id="totalPctText" style="color:#a78bfa;font-weight:700"></span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="hero-visual">
+    <img class="hero-img"
+      src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1000&q=85"
+      alt="Students collaborating in a professional setting">
+    <div class="hero-img-fade"></div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════
+     PRICING BAND
+════════════════════════════════════════════════════════════ -->
+<div class="pricing-band">
+  <div class="pb-item">
+    <div class="pb-icon">⏳</div>
+    <div>
+      <div class="pb-label">Workshop Starts In</div>
+      <div class="pb-countdown" id="pbCountdown">
+        <span class="cd-unit"><span class="cd-num" id="cdDays">--</span><span class="cd-lbl">d</span></span>
+        <span class="cd-sep">:</span>
+        <span class="cd-unit"><span class="cd-num" id="cdHours">--</span><span class="cd-lbl">h</span></span>
+        <span class="cd-sep">:</span>
+        <span class="cd-unit"><span class="cd-num" id="cdMins">--</span><span class="cd-lbl">m</span></span>
+        <span class="cd-sep">:</span>
+        <span class="cd-unit"><span class="cd-num" id="cdSecs">--</span><span class="cd-lbl">s</span></span>
+      </div>
+      <div class="pb-sub">Sat, 29 March 2026 · 7–9 PM IST</div>
+    </div>
+  </div>
+  <div class="pb-item pb-item-dates">
+    <div class="pb-icon">📅</div>
+    <div>
+      <div class="pb-label">Workshop Schedule</div>
+      <div class="pb-date-list">
+        <div class="pb-date-row"><span class="pb-day-badge">Day 1</span><span>Sat, 29 Mar</span></div>
+        <div class="pb-date-row"><span class="pb-day-badge">Day 2</span><span>Sun, 30 Mar</span></div>
+        <div class="pb-date-row"><span class="pb-day-badge">Day 3</span><span>Mon, 31 Mar</span></div>
+      </div>
+      <div class="pb-time-row">🕖 7:00 PM – 9:00 PM IST</div>
+    </div>
+  </div>
+  <div class="pb-item">
+    <div class="pb-icon">🖥</div>
+    <div>
+      <div class="pb-label">Format</div>
+      <div class="pb-val">Live Online</div>
+      <div class="pb-sub">2 hours · 3 days</div>
+    </div>
+  </div>
+  <div class="pb-item">
+    <div class="pb-icon">🎁</div>
+    <div>
+      <div class="pb-label">Bonus Resources</div>
+      <div class="pb-val">4 Included</div>
+      <div class="pb-sub">Templates &amp; checklists</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     MAIN CONTENT
+════════════════════════════════════════════════════════════ -->
+<div class="container">
+
+  <!-- ABOUT -->
+  <section class="section">
+    <div class="about-grid">
+      <div class="about-img-wrap">
+        <div class="about-corner"></div>
+        <img class="about-img"
+          src="https://images.unsplash.com/photo-1488190211105-8b0e65b80b4e?w=900&q=85"
+          alt="Student writing notes alongside laptop">
+        <div class="about-img-tag">Real Skills · Real Results</div>
+      </div>
+      <div class="about-text">
+        <span class="eyebrow" style="display:block;margin-bottom:14px">What This Is</span>
+        <h2>Most students send 100+ applications and still get <em style="color:var(--gold)">rejected</em></h2>
+        <p style="color:var(--muted);font-size:0.93rem;line-height:1.8;margin:18px 0 28px">
+          Recruiters look for signals most students never build — a strong LinkedIn presence, proof-of-work, a clear portfolio, and strategic applications. This workshop teaches you exactly how to build all of them.
+        </p>
+        <ul class="check-list">
+          <li><span class="check-ico">→</span>Build a LinkedIn profile that recruiters actually notice</li>
+          <li><span class="check-ico">→</span>Create a resume that gets shortlisted — not skipped</li>
+          <li><span class="check-ico">→</span>Build a portfolio &amp; proof-of-work that shows real skills</li>
+          <li><span class="check-ico">→</span>Understand how companies actually hire freshers</li>
+          <li><span class="check-ico">→</span>Apply strategically instead of randomly</li>
+          <li><span class="check-ico">→</span>Use networking &amp; referrals to unlock hidden opportunities</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- CURRICULUM -->
+  <section class="section" id="curriculum">
+    <div class="section-head">
+      <span class="eyebrow">Curriculum</span>
+      <h2>3 Days · 8 Modules · <em>Zero Fluff</em></h2>
+      <hr class="gold-rule">
+      <p>A focused, sequenced programme designed around how companies actually hire — not how most students think they do.</p>
+    </div>
+
+    <div class="day-stack">
+
+      <!-- Day 1 -->
+      <div class="day-card">
+        <div class="day-header">
+          <div class="day-num">01</div>
+          <div>
+            <div class="day-info-title">Professional Identity &amp; Personal Branding</div>
+            <div class="day-info-sub">Build the foundation that makes recruiters take notice</div>
+          </div>
+          <div class="day-badge">Day One</div>
+        </div>
+        <div class="module-row">
+          <div class="module">
+            <div class="mod-number">MODULE 01</div>
+            <div class="mod-title">Corporate Reality</div>
+            <p class="mod-topics">How companies hire freshers · why most resumes fail · what recruiters check before shortlisting a candidate.</p>
+            <span class="mod-outcome">✓ Understand how hiring decisions are made</span>
+          </div>
+          <div class="module">
+            <div class="mod-number">MODULE 02</div>
+            <div class="mod-title">LinkedIn Optimisation</div>
+            <p class="mod-topics">Powerful headline writing · About section structure · common profile mistakes · how recruiters search and find you.</p>
+            <span class="mod-outcome">✓ Improve your LinkedIn presence</span>
+          </div>
+          <div class="module">
+            <div class="mod-number">MODULE 03</div>
+            <div class="mod-title">Personal Branding</div>
+            <p class="mod-topics">Online credibility · content and engagement strategy · networking fundamentals that actually produce results.</p>
+            <span class="mod-outcome">✓ Build lasting credibility online</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Day 2 -->
+      <div class="day-card">
+        <div class="day-header">
+          <div class="day-num">02</div>
+          <div>
+            <div class="day-info-title">Resume &amp; Portfolio Mastery</div>
+            <div class="day-info-sub">Create assets that get you shortlisted, not skipped</div>
+          </div>
+          <div class="day-badge">Day Two</div>
+        </div>
+        <div class="module-row">
+          <div class="module">
+            <div class="mod-number">MODULE 04</div>
+            <div class="mod-title">Resume That Gets Shortlisted</div>
+            <p class="mod-topics">Recruiter-preferred structure · strong bullet points · quantifying achievements · ATS-friendly formatting that survives automated screening.</p>
+            <span class="mod-outcome">✓ Create a recruiter-ready resume</span>
+          </div>
+          <div class="module">
+            <div class="mod-number">MODULE 05</div>
+            <div class="mod-title">Portfolio &amp; GitHub Strategy</div>
+            <p class="mod-topics">Proof-of-work importance · presenting projects effectively · GitHub best practices · non-technical portfolio approaches.</p>
+            <span class="mod-outcome">✓ Showcase your work professionally</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Day 3 -->
+      <div class="day-card">
+        <div class="day-header">
+          <div class="day-num">03</div>
+          <div>
+            <div class="day-info-title">Internship &amp; Placement Strategy</div>
+            <div class="day-info-sub">Secure opportunities through smart, targeted outreach</div>
+          </div>
+          <div class="day-badge">Day Three</div>
+        </div>
+        <div class="module-row">
+          <div class="module">
+            <div class="mod-number">MODULE 06</div>
+            <div class="mod-title">Internship Hunting Strategy</div>
+            <p class="mod-topics">Where internships actually come from · strategic application process · cold emailing startups directly · tracking your applications.</p>
+            <span class="mod-outcome">✓ Learn to secure internships</span>
+          </div>
+          <div class="module">
+            <div class="mod-number">MODULE 07</div>
+            <div class="mod-title">Interview Preparation</div>
+            <p class="mod-topics">HR interview fundamentals · behavioural questions · the STAR method · what interviewers are really evaluating beyond your answers.</p>
+            <span class="mod-outcome">✓ Perform confidently in interviews</span>
+          </div>
+          <div class="module">
+            <div class="mod-number">MODULE 08</div>
+            <div class="mod-title">Networking &amp; Referrals</div>
+            <p class="mod-topics">How referrals work in practice · messaging professionals on LinkedIn · building genuine, reciprocal professional connections.</p>
+            <span class="mod-outcome">✓ Unlock the hidden job market</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+</div><!-- /container -->
+
+<!-- PHOTO STRIP -->
+<div class="photo-strip-wrap">
+  <div class="photo-strip">
+    <div class="photo-item">
+      <img src="https://images.unsplash.com/photo-1556761175-b413da4baf72?w=900&q=85" alt="Live workshop in progress">
+      <div class="photo-label">Live Workshop</div>
+    </div>
+    <div class="photo-item">
+      <img src="https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?w=500&q=85" alt="Student learning on laptop">
+      <div class="photo-label">Build Skills</div>
+    </div>
+    <div class="photo-item">
+      <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=500&q=85" alt="Professional interview">
+      <div class="photo-label">Land Interviews</div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- BONUS -->
+  <section class="section" id="bonus">
+    <div class="section-head">
+      <span class="eyebrow">Bonus Resources</span>
+      <h2>Free bonus resources. <em>Yours to keep.</em></h2>
+      <hr class="gold-rule">
+      <p>These resources help you apply smarter and increase your chances of getting shortlisted — ready to use the moment the workshop ends.</p>
+    </div>
+    <div class="bonus-grid">
+      <div class="bonus-card">
+        <div class="bonus-ico">📄</div>
+        <div class="bonus-title">ATS-Friendly Resume Template</div>
+        <p class="bonus-desc">A professional, ATS-optimised resume format that recruiters actually prefer — ready to fill in and submit immediately.</p>
+      </div>
+      <div class="bonus-card">
+        <div class="bonus-ico">✅</div>
+        <div class="bonus-title">LinkedIn Optimisation Checklist</div>
+        <p class="bonus-desc">A step-by-step guide covering every profile section — so recruiters find you before you even apply.</p>
+      </div>
+      <div class="bonus-card">
+        <div class="bonus-ico">📊</div>
+        <div class="bonus-title">Internship Application Tracker</div>
+        <p class="bonus-desc">Track every application, follow-up, and deadline in one place — so no opportunity slips through.</p>
+      </div>
+      <div class="bonus-card">
+        <div class="bonus-ico">✉️</div>
+        <div class="bonus-title">Cold Email Templates for Startups</div>
+        <p class="bonus-desc">Proven outreach templates to contact startup founders and hiring managers directly — with a high reply rate.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- AUDIENCE -->
+  <section class="section" id="who">
+    <div class="audience-grid">
+      <div>
+        <span class="eyebrow" style="display:block;margin-bottom:14px">Who This Is For</span>
+        <h2 style="font-family:'Playfair Display',serif;font-weight:900;font-size:clamp(1.6rem,2.5vw,2.2rem);color:var(--ink);letter-spacing:-0.02em;line-height:1.1">
+          Made for <em style="color:var(--gold)">ambitious</em> students
+        </h2>
+        <div class="pill-row">
+          <span class="pill">2nd Year Students</span>
+          <span class="pill">3rd Year Students</span>
+          <span class="pill">Final Year Students</span>
+          <span class="pill">Internship Seekers</span>
+          <span class="pill">Placement Aspirants</span>
+        </div>
+        <div class="insight-card">
+          <p class="insight-quote">"Your batchmate got the internship. You didn't. Not because they're smarter — but because they know how hiring actually works."</p>
+          <p class="insight-sub">Stop applying blindly. Learn the exact signals recruiters look for — and build them before your placement season begins.</p>
+        </div>
+      </div>
+      <div class="aud-img-wrap">
+        <img class="aud-img-main"
+          src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=800&q=85"
+          alt="Students in collaborative discussion">
+        <img class="aud-img-inset"
+          src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=85"
+          alt="Professional headshot">
+      </div>
+    </div>
+  </section>
+
+  <!-- REGISTER -->
+  <section class="section" id="register">
+    <div class="section-head">
+      <span class="eyebrow">Secure Your Seat</span>
+      <h2>Secure your seat <em>before it's gone</em></h2>
+      <hr class="gold-rule">
+    </div>
+    <div class="register-grid">
+      <div>
+        <img class="reg-aside-img"
+          src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=700&q=85"
+          alt="Student studying at desk">
+        <div class="aside-points">
+          <div class="ap">
+            <div class="ap-ico">📋</div>
+            <span>6 hours of live training — 29, 30 &amp; 31 March, 7–9 PM IST</span>
+          </div>
+          <div class="ap">
+            <div class="ap-ico">🎁</div>
+            <span>4 free bonus resources included — resume template, checklist, tracker &amp; cold email scripts</span>
+          </div>
+          <div class="ap">
+            <div class="ap-ico">👥</div>
+            <span>Strictly limited to 100 participants — no exceptions</span>
+          </div>
+          <div class="ap">
+            <div class="ap-ico">🔒</div>
+            <span>Secure, instant payment via Razorpay</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-card">
+        <div class="form-title">Reserve Your Spot</div>
+        <div class="form-sub">Fill in your details below to proceed to payment.</div>
+        <div class="form-2col">
+          <div class="field">
+            <label>First Name</label>
+            <input type="text" id="fn" placeholder="Aarav">
+          </div>
+          <div class="field">
+            <label>Last Name</label>
+            <input type="text" id="ln" placeholder="Sharma">
+          </div>
+          <div class="field span2">
+            <label>Email Address</label>
+            <input type="email" id="em" placeholder="you@college.edu">
+          </div>
+          <div class="field span2">
+            <label>Phone Number</label>
+            <input type="tel" id="ph" placeholder="+91 98765 43210">
+          </div>
+          <div class="field">
+            <label>College Name</label>
+            <input type="text" id="col" placeholder="Your institution">
+          </div>
+          <div class="field">
+            <label>Year of Study</label>
+            <select id="yr">
+              <option value="" disabled selected>Select year</option>
+              <option>2nd Year</option>
+              <option>3rd Year</option>
+              <option>Final Year</option>
+            </select>
+          </div>
+          <div class="field span2">
+            <label>Your Ticket</label>
+            <div class="auto-ticket" id="autoTicket">
+              <div class="at-price-wrap">
+                <span class="at-price" id="atPrice">₹299</span>
+                <span class="at-badge" id="atBadge">🎉 Early Bird — You save ₹200!</span>
+              </div>
+              <div class="at-desc" id="atDesc">The Placement Code · 3-Day Live Workshop</div>
+            </div>
+          </div>
+        </div>
+        <button class="submit-btn" onclick="openPayment()">
+          <span>Proceed to Payment</span>
+          <span>→</span>
+        </button>
+        <div class="form-guarantee">
+          <span>🔒</span>
+          <span>Secured by Razorpay · 256-bit SSL Encryption</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div><!-- /container -->
+
+<!-- ═══════════════════════════════════════════════════════
+     FOOTER
+════════════════════════════════════════════════════════════ -->
+<footer>
+  <div class="footer-logo">Hustle<span>Grad</span></div>
+  <div class="footer-copy">© 2025 HustleGrad · All Rights Reserved</div>
+  <div class="footer-links">
+    <a href="privacy.html" class="footer-link">Privacy Policy</a>
+    <a href="terms.html" class="footer-link">Terms of Service</a>
+    <a href="contact.html" class="footer-link">Contact</a>
+  </div>
+</footer>
+
+<!-- ═══════════════════════════════════════════════════════
+     PAYMENT MODAL
+════════════════════════════════════════════════════════════ -->
+<div class="overlay" id="overlay">
+  <div class="modal">
+    <button class="modal-close" onclick="closePayment()">✕</button>
+
+    <div id="payView">
+      <div class="modal-kicker">Complete Your Registration</div>
+      <div class="modal-title">Secure Payment</div>
+      <div class="modal-sub">One step away from confirming your seat.</div>
+
+      <div class="order-summary">
+        <div>
+          <div class="os-title">The Placement Code</div>
+          <div class="os-sub">3-Day Live Workshop · All Bonus Resources</div>
+        </div>
+        <div class="os-price" id="displayAmt">₹299</div>
+      </div>
+
+      <div class="pm-tabs">
+        <button class="pm-tab on" onclick="switchTab(this,'upi')">UPI</button>
+        <button class="pm-tab" onclick="switchTab(this,'card')">Card</button>
+        <button class="pm-tab" onclick="switchTab(this,'nb')">Net Banking</button>
+      </div>
+
+      <!-- UPI -->
+      <div class="pm-pane on" id="pane-upi">
+        <div class="upi-options">
+          <div class="upi-btn">📱 GPay</div>
+          <div class="upi-btn">💜 PhonePe</div>
+          <div class="upi-btn">🐾 Paytm</div>
+          <div class="upi-btn">🏛 BHIM</div>
+        </div>
+        <div class="m-field">
+          <label>Or Enter UPI ID</label>
+          <input type="text" placeholder="yourname@upi">
+        </div>
+      </div>
+
+      <!-- Card -->
+      <div class="pm-pane" id="pane-card">
+        <div class="m-field">
+          <label>Card Number</label>
+          <input type="text" placeholder="1234 5678 9012 3456" maxlength="19" oninput="formatCard(this)">
+        </div>
+        <div class="card-row">
+          <div class="m-field">
+            <label>Expiry</label>
+            <input type="text" placeholder="MM / YY" maxlength="7">
+          </div>
+          <div class="m-field">
+            <label>CVV</label>
+            <input type="password" placeholder="•••" maxlength="3">
+          </div>
+        </div>
+      </div>
+
+      <!-- Net Banking -->
+      <div class="pm-pane" id="pane-nb">
+        <div class="m-field">
+          <label>Select Bank</label>
+          <select>
+            <option disabled selected>Choose your bank</option>
+            <option>State Bank of India</option>
+            <option>HDFC Bank</option>
+            <option>ICICI Bank</option>
+            <option>Axis Bank</option>
+            <option>Kotak Mahindra Bank</option>
+          </select>
+        </div>
+      </div>
+
+      <button class="pay-btn" onclick="processPayment()">
+        <span>🔒</span>
+        Pay <span id="btnAmt">₹299</span> Securely
+      </button>
+      <div class="modal-secure">256-bit SSL Encrypted · Powered by Razorpay</div>
+    </div>
+
+    <!-- Spinner -->
+    <div class="spinner-view" id="spinView">
+      <div class="spinner"></div>
+      <div class="spinner-text">Processing your payment…</div>
+      <div class="spinner-sub">Please keep this window open</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     SUCCESS PAGE
+════════════════════════════════════════════════════════════ -->
+<div class="success-page" id="successPage">
+  <div class="success-check">✓</div>
+  <h2 class="success-title">You're confirmed, <span id="successName">Hustler</span>!</h2>
+  <p class="success-body">
+    Your seat for <strong>The Placement Code</strong> is now secured.<br>
+    Check your inbox for the workshop link and joining instructions.
+  </p>
+  <p class="success-follow">Follow HustleGrad — Stay Updated</p>
+  <div class="social-row">
+    <a href="#" class="social-btn ig">
+      <span class="s-ico">📸</span>
+      <span class="s-name">Instagram</span>
+      <span class="s-hdl">@hustlegrad</span>
+    </a>
+    <a href="#" class="social-btn li">
+      <span class="s-ico">💼</span>
+      <span class="s-name">LinkedIn</span>
+      <span class="s-hdl">HustleGrad</span>
+    </a>
+    <a href="#" class="social-btn wa">
+      <span class="s-ico">💬</span>
+      <span class="s-name">WhatsApp</span>
+      <span class="s-hdl">Community</span>
+    </a>
+    <a href="#" class="social-btn tw">
+      <span class="s-ico">🐦</span>
+      <span class="s-name">Twitter / X</span>
+      <span class="s-hdl">@hustlegrad</span>
+    </a>
+    <a href="#" class="social-btn yt">
+      <span class="s-ico">▶</span>
+      <span class="s-name">YouTube</span>
+      <span class="s-hdl">HustleGrad</span>
+    </a>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
