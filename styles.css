@@ -304,6 +304,23 @@ nav {
   font-weight: 500;
 }
 
+/* Updated Flash Animation */
+.updated-flash {
+  animation: flash-gold 0.5s ease;
+}
+@keyframes flash-gold {
+  0% { color: var(--gold-lt); text-shadow: 0 0 10px var(--gold); }
+  100% { color: inherit; text-shadow: none; }
+}
+
+.float-badge {
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3), 0 0 15px rgba(200,146,42,0.1);
+  transition: box-shadow 0.3s ease;
+}
+.float-badge:hover {
+  box-shadow: 0 8px 30px rgba(0,0,0,0.4), 0 0 25px rgba(200,146,42,0.2);
+}
+
 .pricing-band {
   background: var(--ink-2);
   border-bottom: 1px solid rgba(200,146,42,0.15);

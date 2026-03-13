@@ -171,6 +171,11 @@ async def verify_payment(req: VerifyRequest, request: Request):
 
         ticket = databases.get_document(DB_ID, TICKETS_COLL, req.ticketType)
 
+        # SECURITY: Ensure the ticket type matches what was actually paid for
+        if ticket['price'] != doc['amount']:
+            logger.error(f"TICKET TYPE MISMATCH: Order {req.razorpay_order_id} paid {doc['amount']}, but claimed {req.ticketType} ({ticket['price']})")
+            raise HTTPException(status_code=400, detail="Ticket type mismatch")
+
         if ticket['sold'] >= ticket['limit']:
             raise HTTPException(status_code=400, detail="Ticket limit exceeded")
 

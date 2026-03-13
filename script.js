@@ -17,11 +17,29 @@ async function syncTickets() {
       if (t.type === 'STANDARD') ticketState.standard = t;
     });
 
-    renderCounters();
+    renderCounters(data);
   } catch (e) {
     console.error("Failed to sync tickets:", e);
   }
 }
+
+function updateHeroStats(data) {
+  const totalSold = data.reduce((sum, t) => sum + t.sold, 0);
+  const totalLimit = 100;
+  const remaining = Math.max(0, totalLimit - totalSold);
+  const pct = Math.round((totalSold / totalLimit) * 100);
+  // Animate the 'Total Registered' number
+  animateValue("heroTotalCount", 0, totalSold, 1000);
+
+  // Update bars and labels
+  updateProgressBar("totalFill", pct);
+  updateText("totalRemainingText", `${remaining} seats left`);
+  updateText("totalPctText", `${pct}% filled`);
+
+  // Update Hero Grid Pill
+  updateText("heroSeatsLeft", `${remaining}`);
+}
+
 
 function isEarlyBirdAvailable() {
   return ticketState.early.sold < ticketState.early.limit;
@@ -30,7 +48,10 @@ function isEarlyBirdAvailable() {
 /* ─────────────────────────────────────────────
    RENDER ALL COUNTERS + AUTO TICKET
  ───────────────────────────────────────────── */
-function renderCounters() {
+/* ─────────────────────────────────────────────
+   RENDER ALL COUNTERS + AUTO TICKET
+  ───────────────────────────────────────────── */
+function renderCounters(dataForHero) {
   const early = ticketState.early;
   const standard = ticketState.standard;
 
@@ -47,6 +68,11 @@ function renderCounters() {
   if (totalFillEl) totalFillEl.style.width = Math.min(totalPct, 100) + '%';
 
   setText('heroTotalCount', standard.sold);
+
+  // Call the new hero stats update logic
+  if (typeof updateHeroStats === 'function') {
+    updateHeroStats(dataForHero);
+  }
 
   if (earlyFull) {
     setText('heroEarlySub', 'Early Bird — Sold Out');
@@ -83,6 +109,42 @@ function renderCounters() {
 function setText(id, val) {
   const el = document.getElementById(id);
   if (el) el.textContent = val;
+}
+
+function updateText(id, val) {
+  const el = document.getElementById(id);
+  if (el) {
+    el.textContent = val;
+    // Add a tiny flash effect
+    el.classList.add('updated-flash');
+    setTimeout(() => el.classList.remove('updated-flash'), 500);
+  }
+}
+
+function updateProgressBar(id, pct) {
+  const el = document.getElementById(id);
+  if (el) el.style.width = Math.min(pct, 100) + '%';
+}
+
+function animateValue(id, start, end, duration) {
+  const obj = document.getElementById(id);
+  if (!obj) return;
+
+  if (start === end) {
+    obj.textContent = end;
+    return;
+  }
+
+  let startTimestamp = null;
+  const step = (timestamp) => {
+    if (!startTimestamp) startTimestamp = timestamp;
+    const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+    obj.textContent = Math.floor(progress * (end - start) + start);
+    if (progress < 1) {
+      window.requestAnimationFrame(step);
+    }
+  };
+  window.requestAnimationFrame(step);
 }
 
 /* ─────────────────────────────────────────────
